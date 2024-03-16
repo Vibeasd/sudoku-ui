@@ -1,21 +1,9 @@
-.grid-container {
-	height: 100dvh;
-	background-image: linear-gradient(to right, rgb(203 213 225) 1px, transparent 1px),
-		linear-gradient(to bottom, rgb(203 213 225) 1px, transparent 1px);
-	background-size: 2.5rem 2.5rem;
-	background-position: center center;
-
-	display: flex;
-	justify-content: center;
-	justify-items: center;
-}
-
 .menu-panel {
 	display: grid;
 	align-content: flex-start;
 	background-color: var(--surface-color);
 	border: 6px solid var(--secondary-color);
-	padding: var(--gap-medium);
+	padding: var(--gap-large);
 	border-radius: 16px;
 	gap: var(--gap-large);
 }

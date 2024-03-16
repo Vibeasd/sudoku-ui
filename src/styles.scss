@@ -8,6 +8,20 @@
 	// Set default font
 	font-family: "Poppins";
 	font-size: 16px;
+
+	box-sizing: border-box;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+	-moz-appearance: textfield;
 }
 
 :root {
@@ -34,6 +48,18 @@ button {
 	cursor: pointer;
 }
 
+a {
+	background-color: var(--secondary-color);
+	border: none;
+	color: white;
+	padding: var(--gap-small) var(--gap-medium);
+	text-align: center;
+	display: inline-block;
+	margin: 4px 2px;
+	border-radius: 16px;
+	text-decoration: none;
+}
+
 select {
 	appearance: none;
 	-webkit-appearance: none;
@@ -47,4 +73,16 @@ select {
 	border-radius: 8px;
 	color: white;
 	background-color: var(--secondary-color);
+}
+
+.grid-container {
+	min-height: 100dvh;
+	background-image: linear-gradient(to right, rgb(203 213 225) 1px, transparent 1px),
+		linear-gradient(to bottom, rgb(203 213 225) 1px, transparent 1px);
+	background-size: 2.5rem 2.5rem;
+	background-position: center center;
+
+	display: flex;
+	justify-content: center;
+	justify-items: center;
 }
