@@ -1,0 +1,53 @@
+.board-table {
+	display: grid;
+	align-content: flex-start;
+	grid-template-areas:
+		"header1 header2 header3 header4 header5 header6"
+		"main main main main main main"
+		"footer footer footer footer footer footer";
+	background-color: var(--surface-color);
+	border: 6px solid var(--secondary-color);
+	padding: var(--gap-medium);
+	border-radius: 16px;
+	gap: var(--gap-large);
+	width: 90%;
+}
+
+@media only screen and (max-width: 768px) {
+	.board-table {
+		grid-template-areas:
+			"header1 header2"
+			"header3 header4"
+			"header5 header6"
+			"main main"
+			"footer footer";
+		border-radius: 0;
+	}
+}
+
+@for $i from 1 through 6 {
+	.header#{$i} {
+		grid-area: header#{$i};
+	}
+}
+
+.navigation-menu {
+	grid-area: navigation;
+}
+
+.game-area {
+	grid-area: main;
+	justify-self: center;
+	padding: 72px 0;
+}
+
+.footer {
+	grid-area: footer;
+	justify-self: center;
+}
+
+h3 {
+	font: 700 24px "Fredoka One";
+	color: var(--primary-color);
+	align-self: center;
+}

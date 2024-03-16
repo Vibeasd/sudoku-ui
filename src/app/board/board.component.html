@@ -1,0 +1,7 @@
+<form>
+	@for (row of mockBoard; track $index) {
+		@for (value of row; track $index) {
+			<input type="number" [value]="value" />
+		}
+	}
+</form>

@@ -1,0 +1,30 @@
+.menu-panel {
+	display: grid;
+	align-content: flex-start;
+	background-color: var(--surface-color);
+	border: 6px solid var(--secondary-color);
+	padding: var(--gap-large);
+	border-radius: 16px;
+	gap: var(--gap-large);
+}
+
+.title {
+	font: 700 48px "Fredoka One";
+	color: var(--primary-color);
+	margin-top: var(--gap-large);
+}
+
+.form-container {
+	display: grid;
+	align-content: flex-start;
+	gap: var(--gap-medium);
+}
+
+.information-label {
+	font: 700 24px "Fredoka One";
+	color: var(--primary-color);
+}
+
+.submit-btn {
+	margin-top: var(--gap-large);
+}
