@@ -1,0 +1,103 @@
+name: CI
+
+on:
+  pull_request:
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository 📁
+        uses: actions/checkout@v3
+        with:
+          node-version: 20
+
+      - name: Setup Node.js 🌳
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies 📥
+        run: npm ci
+
+      - name: Check formatting 💎
+        run: npm run format:check
+
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository 📁
+        uses: actions/checkout@v3
+        with:
+          node-version: 20
+
+      - name: Setup Node.js 🌳
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies 📥
+        run: npm ci
+
+      - name: Check lint errors 🔍
+        run: npm run lint
+
+  building:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git Repository 📁
+        uses: actions/checkout@v3
+        with:
+          node-version: 20
+
+      - name: Setup Node.js 🌳
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies 📥
+        run: npm ci
+
+      - name: Build the app 🔨
+        run: npm run build
+
+  unit-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git Repository 📁
+        uses: actions/checkout@v3
+        with:
+          node-version: 20
+
+      - name: Setup Node.js 🌳
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies 📥
+        run: npm ci
+
+      - name: Run unit tests 📜
+        run: npm run test
+
+  e2e-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git Repository 📁
+        uses: actions/checkout@v3
+        with:
+          node-version: 20
+
+      - name: Setup Node.js 🌳
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies 📥
+        run: npm ci
+
+      - name: Install Playwright Browsers 📥
+        run: npx playwright install --with-deps
+
+      - name: Run e2e tests 👺
+        run: npm run e2e
