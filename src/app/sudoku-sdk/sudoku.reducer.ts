@@ -39,6 +39,7 @@ export const AppReducer = createReducer(
 		return {
 			...state,
 			initialBoardOne: board,
+			inGameBoardOne: board,
 			isSolved: true,
 		};
 	}),
@@ -46,6 +47,7 @@ export const AppReducer = createReducer(
 		return {
 			...state,
 			initialBoardTwo: board,
+			inGameBoardTwo: board,
 			isSolved: true,
 		};
 	}),
@@ -56,6 +58,30 @@ export const AppReducer = createReducer(
 		};
 	}),
 	on(sudokuActions.solveBoardTwoFailure, (state): AppState => {
+		return {
+			...state,
+			isValid: false,
+		};
+	}),
+	on(sudokuActions.validateBoardOneSuccess, (state): AppState => {
+		return {
+			...state,
+			isSolved: true,
+		};
+	}),
+	on(sudokuActions.validateBoardTwoSuccess, (state): AppState => {
+		return {
+			...state,
+			isSolved: true,
+		};
+	}),
+	on(sudokuActions.validateBoardOneFailure, (state): AppState => {
+		return {
+			...state,
+			isValid: false,
+		};
+	}),
+	on(sudokuActions.validateBoardTwoFailure, (state): AppState => {
 		return {
 			...state,
 			isValid: false,

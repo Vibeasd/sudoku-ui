@@ -69,7 +69,6 @@ export class SudokuEffect {
 			switchMap(([, inGameBoard]) => {
 				return this.sudokuService.solveSudokuBoard(inGameBoard).pipe(
 					map((response) => {
-						console.log('solve response', response);
 						if (response.status === 'solved') {
 							return sudokuActions.solveBoardOneSuccess({ board: response.solution });
 						} else {
@@ -92,6 +91,42 @@ export class SudokuEffect {
 							return sudokuActions.solveBoardTwoSuccess({ board: response.solution });
 						} else {
 							return sudokuActions.solveBoardTwoFailure();
+						}
+					}),
+				);
+			}),
+		);
+	});
+
+	validateBoardOne$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(sudokuActions.validateBoardOne),
+			withLatestFrom(this.store.select(selectBoardOneInGame)),
+			switchMap(([, inGameBoard]) => {
+				return this.sudokuService.validateSudokuBoard(inGameBoard).pipe(
+					map((response) => {
+						if (response.status === 'solved') {
+							return sudokuActions.validateBoardOneSuccess();
+						} else {
+							return sudokuActions.validateBoardOneFailure();
+						}
+					}),
+				);
+			}),
+		);
+	});
+
+	validateBoardTwo$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(sudokuActions.validateBoardTwo),
+			withLatestFrom(this.store.select(selectBoardTwoInGame)),
+			switchMap(([, inGameBoard]) => {
+				return this.sudokuService.validateSudokuBoard(inGameBoard).pipe(
+					map((response) => {
+						if (response.status === 'solved') {
+							return sudokuActions.validateBoardTwoSuccess();
+						} else {
+							return sudokuActions.validateBoardTwoFailure();
 						}
 					}),
 				);

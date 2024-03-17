@@ -44,6 +44,14 @@ export class BoardContainerComponent {
 		this.store.dispatch(sudokuActions.solveBoardTwo());
 	}
 
+	solveValidateOne() {
+		this.store.dispatch(sudokuActions.validateBoardOne());
+	}
+
+	solveValidateTwo() {
+		this.store.dispatch(sudokuActions.validateBoardTwo());
+	}
+
 	solvedConfirmed() {
 		this.store.dispatch(sudokuActions.solvingConfirmed());
 	}

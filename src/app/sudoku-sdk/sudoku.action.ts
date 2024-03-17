@@ -23,6 +23,7 @@ export const sudokuActions = createActionGroup({
 
 		'Validate Board One': emptyProps(),
 		'Validate Board Two': emptyProps(),
+
 		'Validate Board One Success': emptyProps(),
 		'Validate Board Two Success': emptyProps(),
 		'Validate Board One Failure': emptyProps(),

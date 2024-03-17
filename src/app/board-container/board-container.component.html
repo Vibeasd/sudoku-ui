@@ -2,7 +2,7 @@
 	<div [ngClass]="(isSingle$ | async) ? 'board-table' : 'multi-board-table'">
 		<h3 class="header1">Difficulty: {{ difficulty$ | async | titlecase }}</h3>
 		@if (isSingle$ | async) {
-			<button class="header2">Validate</button>
+			<button (click)="solveValidateOne()" class="header2">Validate</button>
 			<button (click)="solveBoardOne()" class="header3">Solve</button>
 		}
 		<button class="header4" (click)="restartGame()">Restart</button>
@@ -11,7 +11,7 @@
 				<app-board [isMultiMode]="false" [isPlayerOne]="true" [boardConfig$]="boardOne$"></app-board>
 			} @else {
 				<div class="multi-board-container">
-					<button class="menu-item-validation">Validate</button>
+					<button (click)="solveValidateOne()" class="menu-item-validation">Validate</button>
 					<button (click)="solveBoardOne()" class="menu-item-solve">Solve</button>
 					<app-board
 						class="game-board"
@@ -21,7 +21,7 @@
 					></app-board>
 				</div>
 				<div class="multi-board-container">
-					<button class="menu-item-validation">Validate</button>
+					<button (click)="solveValidateTwo()" class="menu-item-validation">Validate</button>
 					<button (click)="solveBoardTwo()" class="menu-item-solve">Solve</button>
 					<app-board
 						class="game-board"
