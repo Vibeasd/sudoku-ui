@@ -1,14 +1,85 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Board, MOCK_BOARD } from '../model/sudoku.types';
+import { CommonModule, NgClass } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
+import { Board } from '../model/sudoku.types';
+import { sudokuActions } from '../sudoku-sdk/sudoku.action';
+import { InputValidatorDirective } from '../utils/input-validator.directive';
 
 @Component({
 	selector: 'app-board',
 	standalone: true,
-	imports: [CommonModule],
+	imports: [CommonModule, NgClass, ReactiveFormsModule, InputValidatorDirective],
 	templateUrl: './board.component.html',
 	styleUrl: './board.component.scss',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BoardComponent {
-	mockBoard: Board = MOCK_BOARD;
+export class BoardComponent implements OnDestroy, OnInit {
+	@Input()
+	boardConfig$!: Observable<Board>;
+
+	@Input()
+	isPlayerOne!: boolean;
+
+	@Input()
+	isMultiMode!: boolean;
+
+	boardForm: FormGroup = new FormGroup({});
+	flattenedBoard = signal<number[]>([]);
+	subscriptions$$: Subscription = new Subscription();
+
+	constructor(private store: Store) {
+		const formValueChanges$ = this.boardForm.valueChanges
+			.pipe(debounceTime(200), distinctUntilChanged())
+			.subscribe((formState) => {
+				const inputValues: Board = this.arrayToBoard(
+					Object.values(formState).map((value) => (value === '' ? 0 : value)) as number[],
+				);
+				if (this.isPlayerOne) {
+					this.store.dispatch(sudokuActions.updateBoardOne({ board: inputValues }));
+				} else {
+					this.store.dispatch(sudokuActions.updateBoardTwo({ board: inputValues }));
+				}
+			});
+
+		this.subscriptions$$.add(formValueChanges$);
+	}
+	ngOnInit(): void {
+		const initBoard$ = this.boardConfig$.subscribe((board) => {
+			this.flattenedBoard.set(board ? this.flattenBoard(board) : []);
+			this.boardForm = new FormGroup({});
+			for (let i = 0; i < this.flattenedBoard().length; i++) {
+				const formControlName = 'inputControl' + i;
+				this.boardForm.addControl(
+					formControlName,
+					new FormControl(this.flattenedBoard()[i] === 0 ? '' : this.flattenedBoard()[i]),
+				);
+			}
+		});
+
+		this.subscriptions$$.add(initBoard$);
+	}
+	ngOnDestroy(): void {
+		this.subscriptions$$.unsubscribe();
+	}
+
+	private flattenBoard(board: Board): number[] {
+		return ([] as number[]).concat(...board);
+	}
+
+	private arrayToBoard(flattenedBoard: number[]): Board {
+		const board = [];
+		let index = 0;
+
+		for (let i = 0; i < 9; i++) {
+			const row: number[] = [];
+			for (let j = 0; j < 9; j++) {
+				row.push(flattenedBoard[index]);
+				index++;
+			}
+			board.push(row);
+		}
+		return board;
+	}
 }

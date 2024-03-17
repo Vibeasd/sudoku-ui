@@ -28,4 +28,6 @@ export interface AppState {
 	initialBoardTwo: Board;
 	inGameBoardOne: Board;
 	inGameBoardTwo: Board;
+	isSolved: boolean;
+	isValid: boolean;
 }

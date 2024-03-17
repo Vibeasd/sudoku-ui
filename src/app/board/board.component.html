@@ -1,7 +1,24 @@
-<form>
-	@for (row of mockBoard; track $index) {
-		@for (value of row; track $index) {
-			<input type="number" [value]="value" />
+<form [formGroup]="boardForm">
+	@defer (when this.flattenedBoard().length) {
+		@for (value of flattenedBoard(); track $index) {
+			@if (value === 0) {
+				<input
+					formControlName="inputControl{{ $index }}"
+					[ngClass]="isMultiMode ? 'multi-input' : 'single-input'"
+					type="number"
+					[value]=""
+					appInputValidator
+				/>
+			} @else {
+				<input
+					[ngClass]="isMultiMode ? 'multi-input' : 'single-input'"
+					type="number"
+					[value]="value"
+					disabled
+				/>
+			}
 		}
+	} @placeholder {
+		Loading...
 	}
 </form>
