@@ -1,9 +1,9 @@
 <div class="grid-container">
 	<div [ngClass]="(isSingle$ | async) ? 'board-table' : 'multi-board-table'">
-		<h3 class="header1">Difficulty: {{ difficulty$ | async | titlecase }}</h3>
+		<h3 data-testid="difficulty-level" class="header1">Difficulty: {{ difficulty$ | async | titlecase }}</h3>
 		@if (isSingle$ | async) {
-			<button (click)="solveValidateOne()" class="header2">Validate</button>
-			<button (click)="solveBoardOne()" class="header3">Solve</button>
+			<button data-testid="validate-player-one" (click)="solveValidateOne()" class="header2">Validate</button>
+			<button data-testid="solve-player-one" (click)="solveBoardOne()" class="header3">Solve</button>
 		}
 		<button class="header4" (click)="restartGame()">Restart</button>
 		<div class="game-area">
@@ -11,9 +11,14 @@
 				<app-board [isMultiMode]="false" [isPlayerOne]="true" [boardConfig$]="boardOne$"></app-board>
 			} @else {
 				<div class="multi-board-container">
-					<button (click)="solveValidateOne()" class="menu-item-validation">Validate</button>
-					<button (click)="solveBoardOne()" class="menu-item-solve">Solve</button>
+					<button data-testid="validate-player-one" (click)="solveValidateOne()" class="menu-item-validation">
+						Validate
+					</button>
+					<button data-testid="solve-player-one" (click)="solveBoardOne()" class="menu-item-solve">
+						Solve
+					</button>
 					<app-board
+						data-testid="player-one-board"
 						class="game-board"
 						[isMultiMode]="true"
 						[isPlayerOne]="true"
@@ -21,9 +26,14 @@
 					></app-board>
 				</div>
 				<div class="multi-board-container">
-					<button (click)="solveValidateTwo()" class="menu-item-validation">Validate</button>
-					<button (click)="solveBoardTwo()" class="menu-item-solve">Solve</button>
+					<button data-testid="validate-player-two" (click)="solveValidateTwo()" class="menu-item-validation">
+						Validate
+					</button>
+					<button data-testid="solve-player-two" (click)="solveBoardTwo()" class="menu-item-solve">
+						Solve
+					</button>
 					<app-board
+						data-testid="player-two-board"
 						class="game-board"
 						[isMultiMode]="true"
 						[isPlayerOne]="false"
@@ -36,12 +46,13 @@
 	</div>
 	@if (isSolved$ | async) {
 		<div class="solved-banner">
-			<span>There is a winner! You solved it!</span> <button (click)="solvedConfirmed()">Ok</button>
+			<span>There is a winner! You solved it!</span>
+			<button data-testid="solving-ok" (click)="solvedConfirmed()">Ok</button>
 		</div>
 	} @else if ((isValid$ | async) === false) {
 		<div class="error-banner">
 			<span>Oops! Something is not right! Check your solution again.</span>
-			<button (click)="validityConfirmed()">Ok</button>
+			<button data-testid="validation-ok" (click)="validityConfirmed()">Ok</button>
 		</div>
 	}
 </div>

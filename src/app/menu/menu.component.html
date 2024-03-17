@@ -1,22 +1,22 @@
 <div class="grid-container">
 	<div class="menu-panel">
-		<h1 class="title">Sudoku Time</h1>
+		<h1 data-testid="game-title" class="title">Sudoku Time</h1>
 
 		<form [formGroup]="menuForm" (ngSubmit)="onSubmit()" class="form-container">
 			<label class="information-label" for="players">Choose game mode:</label>
-			<select formControlName="gameMode" id="players">
+			<select data-testid="game-mode-selector" formControlName="gameMode" id="players">
 				<option value="single">1 Player</option>
 				<option value="multi">2 Players</option>
 			</select>
 
 			<label class="information-label" for="levels">Choose level:</label>
-			<select formControlName="gameDifficulty" id="levels">
+			<select data-testid="difficulty-selector" formControlName="gameDifficulty" id="levels">
 				@for (elem of difficulties; track $index) {
 					<option [value]="elem">{{ elem | titlecase }}</option>
 				}
 			</select>
 
-			<button [disabled]="menuForm.invalid" class="submit-btn">Start</button>
+			<button data-testid="start-cta" [disabled]="menuForm.invalid" class="submit-btn">Start</button>
 		</form>
 	</div>
 </div>

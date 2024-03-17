@@ -3,6 +3,6 @@ import { BoardContainerComponent } from './board-container/board-container.compo
 import { MenuComponent } from './menu/menu.component';
 
 export const routes: Routes = [
-	{ path: '', component: MenuComponent }, //TODO route guard here, only with chosen set up
 	{ path: 'board', component: BoardContainerComponent },
+	{ path: '**', component: MenuComponent },
 ];
