@@ -1,10 +1,10 @@
 import { CommonModule, NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, map } from 'rxjs';
 import { BoardComponent } from '../board/board.component';
-import { AppState, Board, Difficulty, GameMode } from '../model/sudoku.types';
+import { AppState, Board, Difficulty } from '../model/sudoku.types';
 import { sudokuActions } from '../sudoku-sdk/sudoku.action';
 import {
 	selectBoardOneInitial,
@@ -13,7 +13,6 @@ import {
 	selectGameMode,
 	selectIsSolved,
 	selectIsValid,
-	selectSudokuState,
 } from '../sudoku-sdk/sudoku.selector';
 
 @Component({
