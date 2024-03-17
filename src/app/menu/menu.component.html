@@ -2,22 +2,21 @@
 	<div class="menu-panel">
 		<h1 class="title">Sudoku Time</h1>
 
-		<form class="form-container">
+		<form [formGroup]="menuForm" (ngSubmit)="onSubmit()" class="form-container">
 			<label class="information-label" for="players">Choose game mode:</label>
-			<select id="players">
-				<option>1 Player</option>
-				<option>2 Player</option>
+			<select formControlName="gameMode" id="players">
+				<option value="single">1 Player</option>
+				<option value="multi">2 Players</option>
 			</select>
 
 			<label class="information-label" for="levels">Choose level:</label>
-			<select id="levels">
-				<option>Easy</option>
-				<option>Medium</option>
-				<option>Hard</option>
-				<option>Random</option>
+			<select formControlName="gameDifficulty" id="levels">
+				@for (elem of difficulties; track $index) {
+					<option [value]="elem">{{ elem | titlecase }}</option>
+				}
 			</select>
 
-			<button class="submit-btn">Start</button>
+			<button [disabled]="menuForm.invalid" class="submit-btn">Start</button>
 		</form>
 	</div>
 </div>

@@ -1,12 +1,13 @@
-// type Difficulty = "easy" | "medium" | "hard";
+export type Difficulty = 'easy' | 'medium' | 'hard' | 'random';
+export type GameMode = 'single' | 'multi';
 export type Board = Array<Array<number>>;
 
-// type BoardResponse = { board: Board; };
+export type BoardResponse = { board: Board };
 
-// type SudokuRequest = { board: Board; };
+export type SudokuRequest = { board: Board };
 
-// type SolveResponse = { difficulty: Difficulty; solution: Board; status: "solved" | "broken" | "unsolvable"; };
-// type ValidateResponse = { status: "solved" | "broken"; };
+export type SolveResponse = { difficulty: Difficulty; solution: Board; status: 'solved' | 'broken' | 'unsolvable' };
+export type ValidateResponse = { status: 'solved' | 'broken' };
 
 export const MOCK_BOARD: Board = [
 	[0, 0, 0, 0, 0, 0, 0, 0, 7],
@@ -19,3 +20,12 @@ export const MOCK_BOARD: Board = [
 	[6, 0, 0, 9, 0, 5, 0, 4, 3],
 	[0, 4, 0, 8, 0, 3, 0, 5, 2],
 ];
+
+export interface AppState {
+	gameMode: GameMode | undefined;
+	difficulty: Difficulty | undefined;
+	initialBoardOne: Board;
+	initialBoardTwo: Board;
+	inGameBoardOne: Board;
+	inGameBoardTwo: Board;
+}
