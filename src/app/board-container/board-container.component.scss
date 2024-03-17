@@ -2,9 +2,9 @@
 	display: grid;
 	align-content: flex-start;
 	grid-template-areas:
-		"header1 header2 header3 header4 header5 header6"
-		"main main main main main main"
-		"footer footer footer footer footer footer";
+		"header1 header2 header3 header4"
+		"main main main main"
+		"footer footer footer footer";
 	background-color: var(--surface-color);
 	border: 6px solid var(--secondary-color);
 	padding: var(--gap-medium);
@@ -13,12 +13,26 @@
 	width: 90%;
 }
 
+.multi-board-table {
+	display: grid;
+	align-content: flex-start;
+	grid-template-areas:
+		"header1 header4"
+		"main main"
+		"footer footer";
+	background-color: var(--surface-color);
+	border: 6px solid var(--secondary-color);
+	padding: var(--gap-medium);
+	border-radius: 16px;
+	gap: var(--gap-large);
+	width: 100%;
+}
+
 @media only screen and (max-width: 768px) {
 	.board-table {
 		grid-template-areas:
 			"header1 header2"
 			"header3 header4"
-			"header5 header6"
 			"main main"
 			"footer footer";
 		border-radius: 0;
@@ -37,6 +51,8 @@
 
 .game-area {
 	grid-area: main;
+	display: flex;
+	gap: 72px;
 	justify-self: center;
 	padding: 72px 0;
 }
@@ -50,4 +66,47 @@ h3 {
 	font: 700 24px "Fredoka One";
 	color: var(--primary-color);
 	align-self: center;
+}
+
+.multi-board-container {
+	display: grid;
+	grid-template-areas:
+		"menu1 menu2"
+		"main main";
+	align-content: flex-start;
+	gap: var(--gap-large);
+
+	.menu-item-validation {
+		grid-area: menu1;
+	}
+
+	.menu-item-solve {
+		grid-area: menu2;
+	}
+
+	.game-board {
+		grid-area: main;
+	}
+}
+
+.solved-banner {
+	position: absolute;
+	background-color: var(--success-color);
+	color: white;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 16px;
+	border-radius: 20px;
+}
+
+.error-banner {
+	position: absolute;
+	background-color: var(--error-color);
+	color: white;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 16px;
+	border-radius: 20px;
 }

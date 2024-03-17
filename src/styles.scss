@@ -24,6 +24,13 @@ input[type="number"] {
 	-moz-appearance: textfield;
 }
 
+input:disabled {
+	background-color: #ffffff;
+	border: 1px solid rgb(118, 118, 118);
+	font-weight: 700;
+	font-style: italic;
+}
+
 :root {
 	--primary-color: #605dc8;
 	--secondary-color: #8b89e6;
@@ -85,4 +92,15 @@ select {
 	display: flex;
 	justify-content: center;
 	justify-items: center;
+}
+
+dialog {
+	position: fixed;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: #333;
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 4px;
 }

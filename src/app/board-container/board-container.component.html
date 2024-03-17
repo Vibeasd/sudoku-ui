@@ -1,14 +1,47 @@
 <div class="grid-container">
-	<div class="board-table">
-		<h3 class="header1">Difficulty: Normal</h3>
-		<h3 class="header2">Time: 00:00</h3>
-		<button class="header3">Start</button>
-		<button class="header4">Validate</button>
-		<button class="header5">Solve</button>
-		<button class="header6">Restart</button>
+	<div [ngClass]="(isSingle$ | async) ? 'board-table' : 'multi-board-table'">
+		<h3 class="header1">Difficulty: {{ difficulty$ | async | titlecase }}</h3>
+		@if (isSingle$ | async) {
+			<button class="header2">Validate</button>
+			<button (click)="solveBoardOne()" class="header3">Solve</button>
+		}
+		<button class="header4" (click)="restartGame()">Restart</button>
 		<div class="game-area">
-			<app-board></app-board>
+			@if (isSingle$ | async) {
+				<app-board [isMultiMode]="false" [isPlayerOne]="true" [boardConfig$]="boardOne$"></app-board>
+			} @else {
+				<div class="multi-board-container">
+					<button class="menu-item-validation">Validate</button>
+					<button (click)="solveBoardOne()" class="menu-item-solve">Solve</button>
+					<app-board
+						class="game-board"
+						[isMultiMode]="true"
+						[isPlayerOne]="true"
+						[boardConfig$]="boardOne$"
+					></app-board>
+				</div>
+				<div class="multi-board-container">
+					<button class="menu-item-validation">Validate</button>
+					<button (click)="solveBoardTwo()" class="menu-item-solve">Solve</button>
+					<app-board
+						class="game-board"
+						[isMultiMode]="true"
+						[isPlayerOne]="false"
+						[boardConfig$]="boardTwo$"
+					></app-board>
+				</div>
+			}
 		</div>
-		<div class="footer"><a href="/html/">Back To Menu</a></div>
+		<div class="footer"><a routerLink="">Back To Menu</a></div>
 	</div>
+	@if (isSolved$ | async) {
+		<div class="solved-banner">
+			<span>There is a winner! You solved it!</span> <button (click)="solvedConfirmed()">Ok</button>
+		</div>
+	} @else if ((isValid$ | async) === false) {
+		<div class="error-banner">
+			<span>Oops! Something is not right! Check your solution again.</span>
+			<button (click)="validityConfirmed()">Ok</button>
+		</div>
+	}
 </div>
