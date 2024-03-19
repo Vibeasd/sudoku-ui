@@ -1,8 +1,10 @@
 import { expect, test } from '@playwright/test';
 
+const TEST_PAGE_URL = 'https://vibeasd.github.io/sudoku-ui/';
+
 test.describe('Single player flow', () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto('http://localhost:4200/');
+		await page.goto(TEST_PAGE_URL);
 	});
 
 	test('we are on the menu page and can start a game', async ({ page }) => {
@@ -43,7 +45,7 @@ test.describe('Single player flow', () => {
 
 test.describe('Multi player flow', () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto('http://localhost:4200/');
+		await page.goto(TEST_PAGE_URL);
 	});
 
 	test('we are on the menu page and can start a game', async ({ page }) => {
