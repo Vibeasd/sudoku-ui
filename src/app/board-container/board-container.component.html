@@ -2,7 +2,7 @@
 	<div [ngClass]="(isSingle$ | async) ? 'board-table' : 'multi-board-table'">
 		<h3 data-testid="difficulty-level" class="header1">Difficulty: {{ difficulty$ | async | titlecase }}</h3>
 		@if (isSingle$ | async) {
-			<button data-testid="validate-player-one" (click)="solveValidateOne()" class="header2">Validate</button>
+			<button data-testid="validate-player-one" (click)="validateBoardOne()" class="header2">Validate</button>
 			<button data-testid="solve-player-one" (click)="solveBoardOne()" class="header3">Solve</button>
 		}
 		<button class="header4" (click)="restartGame()">Restart</button>
@@ -11,7 +11,7 @@
 				<app-board [isMultiMode]="false" [isPlayerOne]="true" [boardConfig$]="boardOne$"></app-board>
 			} @else {
 				<div class="multi-board-container">
-					<button data-testid="validate-player-one" (click)="solveValidateOne()" class="menu-item-validation">
+					<button data-testid="validate-player-one" (click)="validateBoardOne()" class="menu-item-validation">
 						Validate
 					</button>
 					<button data-testid="solve-player-one" (click)="solveBoardOne()" class="menu-item-solve">
@@ -26,7 +26,7 @@
 					></app-board>
 				</div>
 				<div class="multi-board-container">
-					<button data-testid="validate-player-two" (click)="solveValidateTwo()" class="menu-item-validation">
+					<button data-testid="validate-player-two" (click)="validateBoardTwo()" class="menu-item-validation">
 						Validate
 					</button>
 					<button data-testid="solve-player-two" (click)="solveBoardTwo()" class="menu-item-solve">
