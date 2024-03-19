@@ -23025,20 +23025,11 @@ function BoardComponent_DeferPlaceholder_2_Template(rf, ctx) {
   }
 }
 var _BoardComponent = class _BoardComponent {
-  constructor(store) {
-    this.store = store;
+  constructor() {
     this.boardForm = new FormGroup({});
     this.flattenedBoard = signal([]);
     this.subscriptions$$ = new Subscription();
-    const formValueChanges$ = this.boardForm.valueChanges.pipe(debounceTime(200), distinctUntilChanged()).subscribe((formState) => {
-      const inputValues = this.arrayToBoard(Object.values(formState).map((value) => value === "" ? 0 : value));
-      if (this.isPlayerOne) {
-        this.store.dispatch(sudokuActions.updateBoardOne({ board: inputValues }));
-      } else {
-        this.store.dispatch(sudokuActions.updateBoardTwo({ board: inputValues }));
-      }
-    });
-    this.subscriptions$$.add(formValueChanges$);
+    this.store = inject(Store);
   }
   ngOnInit() {
     const initBoard$ = this.boardConfig$.subscribe((board) => {
@@ -23050,6 +23041,15 @@ var _BoardComponent = class _BoardComponent {
       }
     });
     this.subscriptions$$.add(initBoard$);
+    const formValueChanges$ = this.boardForm.valueChanges.pipe(debounceTime(200), distinctUntilChanged()).subscribe((formState) => {
+      const inputValues = this.arrayToBoard(Object.values(formState).map((value) => value === "" ? 0 : value));
+      if (this.isPlayerOne) {
+        this.store.dispatch(sudokuActions.updateBoardOne({ board: inputValues }));
+      } else {
+        this.store.dispatch(sudokuActions.updateBoardTwo({ board: inputValues }));
+      }
+    });
+    this.subscriptions$$.add(formValueChanges$);
   }
   ngOnDestroy() {
     this.subscriptions$$.unsubscribe();
@@ -23072,7 +23072,7 @@ var _BoardComponent = class _BoardComponent {
   }
 };
 _BoardComponent.\u0275fac = function BoardComponent_Factory(t) {
-  return new (t || _BoardComponent)(\u0275\u0275directiveInject(Store));
+  return new (t || _BoardComponent)();
 };
 _BoardComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoardComponent, selectors: [["app-board"]], inputs: { boardConfig$: "boardConfig$", isPlayerOne: "isPlayerOne", isMultiMode: "isMultiMode" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 5, vars: 2, consts: [[3, "formGroup"], ["type", "number", "appInputValidator", ""], ["type", "number", "appInputValidator", "", 3, "formControlName", "ngClass", "value"], ["type", "number", "disabled", "", 3, "ngClass", "value"]], template: function BoardComponent_Template(rf, ctx) {
   if (rf & 1) {
@@ -23097,6 +23097,7 @@ var selectSudokuAppState = createFeatureSelector("sudoku");
 var selectSudokuState = createSelector(selectSudokuAppState, (state) => state);
 var selectIsSingleMode = createSelector(selectSudokuAppState, (state) => state.gameMode === "single");
 var selectDifficulty = createSelector(selectSudokuAppState, (state) => state.difficulty);
+var selectIsGameInProgress = createSelector(selectSudokuAppState, (state) => state.isGameInProgress);
 var selectBoardOneInGame = createSelector(selectSudokuAppState, (state) => state.inGameBoardOne);
 var selectBoardTwoInGame = createSelector(selectSudokuAppState, (state) => state.inGameBoardTwo);
 var selectBoardOneInitial = createSelector(selectSudokuAppState, (state) => state.initialBoardOne);
@@ -23126,53 +23127,73 @@ function BoardContainerComponent_Conditional_7_Template(rf, ctx) {
     \u0275\u0275elementEnd();
   }
 }
-function BoardContainerComponent_Conditional_12_Template(rf, ctx) {
+function BoardContainerComponent_Conditional_9_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "app-board", 10);
+    const _r3 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 10);
+    \u0275\u0275listener("click", function BoardContainerComponent_Conditional_9_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r3);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.restartGame());
+    });
+    \u0275\u0275text(1, "Restart");
+    \u0275\u0275elementEnd();
+  }
+}
+function BoardContainerComponent_Conditional_11_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "a", 11);
+    \u0275\u0275text(1, "Back To Menu");
+    \u0275\u0275elementEnd();
+  }
+}
+function BoardContainerComponent_Conditional_13_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "app-board", 12);
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275property("isMultiMode", false)("isPlayerOne", true)("boardConfig$", ctx_r1.boardOne$);
   }
 }
-function BoardContainerComponent_Conditional_14_Template(rf, ctx) {
+function BoardContainerComponent_Conditional_15_Template(rf, ctx) {
   if (rf & 1) {
-    const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 11)(1, "button", 12);
-    \u0275\u0275listener("click", function BoardContainerComponent_Conditional_14_Template_button_click_1_listener() {
-      \u0275\u0275restoreView(_r3);
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 13)(1, "button", 14);
+    \u0275\u0275listener("click", function BoardContainerComponent_Conditional_15_Template_button_click_1_listener() {
+      \u0275\u0275restoreView(_r4);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.validateBoardOne());
     });
     \u0275\u0275text(2, " Validate ");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "button", 13);
-    \u0275\u0275listener("click", function BoardContainerComponent_Conditional_14_Template_button_click_3_listener() {
-      \u0275\u0275restoreView(_r3);
+    \u0275\u0275elementStart(3, "button", 15);
+    \u0275\u0275listener("click", function BoardContainerComponent_Conditional_15_Template_button_click_3_listener() {
+      \u0275\u0275restoreView(_r4);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.solveBoardOne());
     });
     \u0275\u0275text(4, " Solve ");
     \u0275\u0275elementEnd();
-    \u0275\u0275element(5, "app-board", 14);
+    \u0275\u0275element(5, "app-board", 16);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "div", 11)(7, "button", 15);
-    \u0275\u0275listener("click", function BoardContainerComponent_Conditional_14_Template_button_click_7_listener() {
-      \u0275\u0275restoreView(_r3);
+    \u0275\u0275elementStart(6, "div", 13)(7, "button", 17);
+    \u0275\u0275listener("click", function BoardContainerComponent_Conditional_15_Template_button_click_7_listener() {
+      \u0275\u0275restoreView(_r4);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.validateBoardTwo());
     });
     \u0275\u0275text(8, " Validate ");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(9, "button", 16);
-    \u0275\u0275listener("click", function BoardContainerComponent_Conditional_14_Template_button_click_9_listener() {
-      \u0275\u0275restoreView(_r3);
+    \u0275\u0275elementStart(9, "button", 18);
+    \u0275\u0275listener("click", function BoardContainerComponent_Conditional_15_Template_button_click_9_listener() {
+      \u0275\u0275restoreView(_r4);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.solveBoardTwo());
     });
     \u0275\u0275text(10, " Solve ");
     \u0275\u0275elementEnd();
-    \u0275\u0275element(11, "app-board", 17);
+    \u0275\u0275element(11, "app-board", 19);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -23183,15 +23204,15 @@ function BoardContainerComponent_Conditional_14_Template(rf, ctx) {
     \u0275\u0275property("isMultiMode", true)("isPlayerOne", false)("boardConfig$", ctx_r1.boardTwo$);
   }
 }
-function BoardContainerComponent_Conditional_18_Template(rf, ctx) {
+function BoardContainerComponent_Conditional_19_Template(rf, ctx) {
   if (rf & 1) {
-    const _r4 = \u0275\u0275getCurrentView();
+    const _r5 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "div", 7)(1, "span");
     \u0275\u0275text(2, "There is a winner! You solved it!");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "button", 18);
-    \u0275\u0275listener("click", function BoardContainerComponent_Conditional_18_Template_button_click_3_listener() {
-      \u0275\u0275restoreView(_r4);
+    \u0275\u0275elementStart(3, "button", 20);
+    \u0275\u0275listener("click", function BoardContainerComponent_Conditional_19_Template_button_click_3_listener() {
+      \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.solvedConfirmed());
     });
@@ -23199,15 +23220,15 @@ function BoardContainerComponent_Conditional_18_Template(rf, ctx) {
     \u0275\u0275elementEnd()();
   }
 }
-function BoardContainerComponent_Conditional_21_Template(rf, ctx) {
+function BoardContainerComponent_Conditional_22_Template(rf, ctx) {
   if (rf & 1) {
-    const _r5 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 19)(1, "span");
+    const _r6 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 21)(1, "span");
     \u0275\u0275text(2, "Oops! Something is not right! Check your solution again.");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "button", 20);
-    \u0275\u0275listener("click", function BoardContainerComponent_Conditional_21_Template_button_click_3_listener() {
-      \u0275\u0275restoreView(_r5);
+    \u0275\u0275elementStart(3, "button", 22);
+    \u0275\u0275listener("click", function BoardContainerComponent_Conditional_22_Template_button_click_3_listener() {
+      \u0275\u0275restoreView(_r6);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.validityConfirmed());
     });
@@ -23224,6 +23245,7 @@ var _BoardContainerComponent = class _BoardContainerComponent {
     this.boardTwo$ = this.store.select(selectBoardTwoInitial);
     this.isValid$ = this.store.select(selectIsValid);
     this.isSolved$ = this.store.select(selectIsSolved);
+    this.isGameInProgress$ = this.store.select(selectIsGameInProgress);
   }
   /**
    * This method triggers the solving of the player one's board at its current state.
@@ -23271,7 +23293,7 @@ var _BoardContainerComponent = class _BoardContainerComponent {
 _BoardContainerComponent.\u0275fac = function BoardContainerComponent_Factory(t) {
   return new (t || _BoardContainerComponent)(\u0275\u0275directiveInject(Store));
 };
-_BoardContainerComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoardContainerComponent, selectors: [["app-board-container"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 22, vars: 19, consts: [[1, "grid-container"], [3, "ngClass"], ["data-testid", "difficulty-level", 1, "header1"], [1, "header4", 3, "click"], [1, "game-area"], [1, "footer"], ["routerLink", ""], [1, "solved-banner"], ["data-testid", "validate-player-one", 1, "header2", 3, "click"], ["data-testid", "solve-player-one", 1, "header3", 3, "click"], [3, "isMultiMode", "isPlayerOne", "boardConfig$"], [1, "multi-board-container"], ["data-testid", "validate-player-one", 1, "menu-item-validation", 3, "click"], ["data-testid", "solve-player-one", 1, "menu-item-solve", 3, "click"], ["data-testid", "player-one-board", 1, "game-board", 3, "isMultiMode", "isPlayerOne", "boardConfig$"], ["data-testid", "validate-player-two", 1, "menu-item-validation", 3, "click"], ["data-testid", "solve-player-two", 1, "menu-item-solve", 3, "click"], ["data-testid", "player-two-board", 1, "game-board", 3, "isMultiMode", "isPlayerOne", "boardConfig$"], ["data-testid", "solving-ok", 3, "click"], [1, "error-banner"], ["data-testid", "validation-ok", 3, "click"]], template: function BoardContainerComponent_Template(rf, ctx) {
+_BoardContainerComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoardContainerComponent, selectors: [["app-board-container"]], standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 23, vars: 22, consts: [[1, "grid-container"], [3, "ngClass"], ["data-testid", "difficulty-level", 1, "header1"], [1, "header4"], [1, "game-area"], [1, "footer"], ["routerLink", ""], [1, "solved-banner"], ["data-testid", "validate-player-one", 1, "header2", 3, "click"], ["data-testid", "solve-player-one", 1, "header3", 3, "click"], [1, "header4", 3, "click"], ["routerLink", "", 1, "header4"], [3, "isMultiMode", "isPlayerOne", "boardConfig$"], [1, "multi-board-container"], ["data-testid", "validate-player-one", 1, "menu-item-validation", 3, "click"], ["data-testid", "solve-player-one", 1, "menu-item-solve", 3, "click"], ["data-testid", "player-one-board", 1, "game-board", 3, "isMultiMode", "isPlayerOne", "boardConfig$"], ["data-testid", "validate-player-two", 1, "menu-item-validation", 3, "click"], ["data-testid", "solve-player-two", 1, "menu-item-solve", 3, "click"], ["data-testid", "player-two-board", 1, "game-board", 3, "isMultiMode", "isPlayerOne", "boardConfig$"], ["data-testid", "solving-ok", 3, "click"], [1, "error-banner"], ["data-testid", "validation-ok", 3, "click"]], template: function BoardContainerComponent_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 0)(1, "div", 1);
     \u0275\u0275pipe(2, "async");
@@ -23282,42 +23304,41 @@ _BoardContainerComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent
     \u0275\u0275elementEnd();
     \u0275\u0275template(7, BoardContainerComponent_Conditional_7_Template, 4, 0);
     \u0275\u0275pipe(8, "async");
-    \u0275\u0275elementStart(9, "button", 3);
-    \u0275\u0275listener("click", function BoardContainerComponent_Template_button_click_9_listener() {
-      return ctx.restartGame();
-    });
-    \u0275\u0275text(10, "Restart");
+    \u0275\u0275template(9, BoardContainerComponent_Conditional_9_Template, 2, 0, "button", 3);
+    \u0275\u0275pipe(10, "async");
+    \u0275\u0275template(11, BoardContainerComponent_Conditional_11_Template, 2, 0);
+    \u0275\u0275elementStart(12, "div", 4);
+    \u0275\u0275template(13, BoardContainerComponent_Conditional_13_Template, 1, 3, "app-board");
+    \u0275\u0275pipe(14, "async");
+    \u0275\u0275template(15, BoardContainerComponent_Conditional_15_Template, 12, 6);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(11, "div", 4);
-    \u0275\u0275template(12, BoardContainerComponent_Conditional_12_Template, 1, 3, "app-board");
-    \u0275\u0275pipe(13, "async");
-    \u0275\u0275template(14, BoardContainerComponent_Conditional_14_Template, 12, 6);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(15, "div", 5)(16, "a", 6);
-    \u0275\u0275text(17, "Back To Menu");
+    \u0275\u0275elementStart(16, "div", 5)(17, "a", 6);
+    \u0275\u0275text(18, "Back To Menu");
     \u0275\u0275elementEnd()()();
-    \u0275\u0275template(18, BoardContainerComponent_Conditional_18_Template, 5, 0, "div", 7);
-    \u0275\u0275pipe(19, "async");
+    \u0275\u0275template(19, BoardContainerComponent_Conditional_19_Template, 5, 0, "div", 7);
     \u0275\u0275pipe(20, "async");
-    \u0275\u0275template(21, BoardContainerComponent_Conditional_21_Template, 5, 0);
+    \u0275\u0275pipe(21, "async");
+    \u0275\u0275template(22, BoardContainerComponent_Conditional_22_Template, 5, 0);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
     \u0275\u0275advance();
-    \u0275\u0275property("ngClass", \u0275\u0275pipeBind1(2, 5, ctx.isSingle$) ? "board-table" : "multi-board-table");
+    \u0275\u0275property("ngClass", \u0275\u0275pipeBind1(2, 6, ctx.isSingle$) ? "board-table" : "multi-board-table");
     \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate1("Difficulty: ", \u0275\u0275pipeBind1(6, 9, \u0275\u0275pipeBind1(5, 7, ctx.difficulty$)), "");
+    \u0275\u0275textInterpolate1("Difficulty: ", \u0275\u0275pipeBind1(6, 10, \u0275\u0275pipeBind1(5, 8, ctx.difficulty$)), "");
     \u0275\u0275advance(3);
-    \u0275\u0275conditional(7, \u0275\u0275pipeBind1(8, 11, ctx.isSingle$) ? 7 : -1);
-    \u0275\u0275advance(5);
-    \u0275\u0275conditional(12, \u0275\u0275pipeBind1(13, 13, ctx.isSingle$) ? 12 : 14);
+    \u0275\u0275conditional(7, \u0275\u0275pipeBind1(8, 12, ctx.isSingle$) ? 7 : -1);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(9, \u0275\u0275pipeBind1(10, 14, ctx.isGameInProgress$) ? 9 : 11);
+    \u0275\u0275advance(4);
+    \u0275\u0275conditional(13, \u0275\u0275pipeBind1(14, 16, ctx.isSingle$) ? 13 : 15);
     \u0275\u0275advance(6);
-    \u0275\u0275conditional(18, \u0275\u0275pipeBind1(19, 15, ctx.isSolved$) ? 18 : \u0275\u0275pipeBind1(20, 17, ctx.isValid$) === false ? 21 : -1);
+    \u0275\u0275conditional(19, \u0275\u0275pipeBind1(20, 18, ctx.isSolved$) ? 19 : \u0275\u0275pipeBind1(21, 20, ctx.isValid$) === false ? 22 : -1);
   }
-}, dependencies: [BoardComponent, RouterLink, CommonModule, NgClass, AsyncPipe, TitleCasePipe], styles: ['\n\n.board-table[_ngcontent-%COMP%] {\n  display: grid;\n  align-content: flex-start;\n  grid-template-areas: "header1 header2 header3 header4" "main main main main" "footer footer footer footer";\n  background-color: var(--surface-color);\n  border: 6px solid var(--secondary-color);\n  padding: var(--gap-medium);\n  border-radius: 16px;\n  gap: var(--gap-large);\n  width: 90%;\n}\n.multi-board-table[_ngcontent-%COMP%] {\n  display: grid;\n  align-content: flex-start;\n  grid-template-areas: "header1 header4" "main main" "footer footer";\n  background-color: var(--surface-color);\n  border: 6px solid var(--secondary-color);\n  padding: var(--gap-medium);\n  border-radius: 16px;\n  gap: var(--gap-large);\n  width: 100%;\n}\n@media only screen and (max-width: 768px) {\n  .board-table[_ngcontent-%COMP%] {\n    grid-template-areas: "header1 header2" "header3 header4" "main main" "footer footer";\n    border-radius: 0;\n  }\n}\n.header1[_ngcontent-%COMP%] {\n  grid-area: header1;\n}\n.header2[_ngcontent-%COMP%] {\n  grid-area: header2;\n}\n.header3[_ngcontent-%COMP%] {\n  grid-area: header3;\n}\n.header4[_ngcontent-%COMP%] {\n  grid-area: header4;\n}\n.header5[_ngcontent-%COMP%] {\n  grid-area: header5;\n}\n.header6[_ngcontent-%COMP%] {\n  grid-area: header6;\n}\n.navigation-menu[_ngcontent-%COMP%] {\n  grid-area: navigation;\n}\n.game-area[_ngcontent-%COMP%] {\n  grid-area: main;\n  display: flex;\n  gap: 72px;\n  justify-self: center;\n  padding: 72px 0;\n}\n.footer[_ngcontent-%COMP%] {\n  grid-area: footer;\n  justify-self: center;\n}\nh3[_ngcontent-%COMP%] {\n  font: 700 24px "Fredoka One";\n  color: var(--primary-color);\n  align-self: center;\n}\n.multi-board-container[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-areas: "menu1 menu2" "main main";\n  align-content: flex-start;\n  gap: var(--gap-large);\n}\n.multi-board-container[_ngcontent-%COMP%]   .menu-item-validation[_ngcontent-%COMP%] {\n  grid-area: menu1;\n}\n.multi-board-container[_ngcontent-%COMP%]   .menu-item-solve[_ngcontent-%COMP%] {\n  grid-area: menu2;\n}\n.multi-board-container[_ngcontent-%COMP%]   .game-board[_ngcontent-%COMP%] {\n  grid-area: main;\n}\n.solved-banner[_ngcontent-%COMP%] {\n  position: absolute;\n  background-color: var(--success-color);\n  color: white;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  padding: 16px;\n  border-radius: 20px;\n}\n.error-banner[_ngcontent-%COMP%] {\n  position: absolute;\n  background-color: var(--error-color);\n  color: white;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  padding: 16px;\n  border-radius: 20px;\n}\n/*# sourceMappingURL=board-container.component.css.map */'], changeDetection: 0 });
+}, dependencies: [BoardComponent, RouterLink, CommonModule, NgClass, AsyncPipe, TitleCasePipe], styles: ['\n\n.board-table[_ngcontent-%COMP%] {\n  display: grid;\n  align-content: flex-start;\n  grid-template-areas: "header1 header2 header3 header4" "main main main main" "footer footer footer footer";\n  background-color: var(--surface-color);\n  border: 6px solid var(--secondary-color);\n  padding: var(--spacing-medium);\n  border-radius: 16px;\n  gap: var(--spacing-large);\n  width: 90%;\n}\n.multi-board-table[_ngcontent-%COMP%] {\n  display: grid;\n  align-content: flex-start;\n  grid-template-areas: "header1 header4" "main main" "footer footer";\n  background-color: var(--surface-color);\n  border: 6px solid var(--secondary-color);\n  padding: var(--spacing-medium);\n  border-radius: 16px;\n  gap: var(--spacing-large);\n  width: 100%;\n}\n@media only screen and (max-width: 768px) {\n  .board-table[_ngcontent-%COMP%] {\n    grid-template-areas: "header1 header2" "header3 header4" "main main" "footer footer";\n    border-radius: 0;\n  }\n}\n.header1[_ngcontent-%COMP%] {\n  grid-area: header1;\n}\n.header2[_ngcontent-%COMP%] {\n  grid-area: header2;\n}\n.header3[_ngcontent-%COMP%] {\n  grid-area: header3;\n}\n.header4[_ngcontent-%COMP%] {\n  grid-area: header4;\n}\n.header5[_ngcontent-%COMP%] {\n  grid-area: header5;\n}\n.header6[_ngcontent-%COMP%] {\n  grid-area: header6;\n}\n.navigation-menu[_ngcontent-%COMP%] {\n  grid-area: navigation;\n}\n.game-area[_ngcontent-%COMP%] {\n  grid-area: main;\n  display: flex;\n  gap: 72px;\n  justify-self: center;\n  padding: 72px 0;\n}\n.footer[_ngcontent-%COMP%] {\n  grid-area: footer;\n  justify-self: center;\n}\nh3[_ngcontent-%COMP%] {\n  font: 700 24px "Fredoka One";\n  color: var(--primary-color);\n  align-self: center;\n}\n.multi-board-container[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-areas: "menu1 menu2" "main main";\n  align-content: flex-start;\n  gap: var(--spacing-large);\n}\n.multi-board-container[_ngcontent-%COMP%]   .menu-item-validation[_ngcontent-%COMP%] {\n  grid-area: menu1;\n}\n.multi-board-container[_ngcontent-%COMP%]   .menu-item-solve[_ngcontent-%COMP%] {\n  grid-area: menu2;\n}\n.multi-board-container[_ngcontent-%COMP%]   .game-board[_ngcontent-%COMP%] {\n  grid-area: main;\n}\n.solved-banner[_ngcontent-%COMP%] {\n  position: absolute;\n  background-color: var(--success-color);\n  color: white;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  padding: 16px;\n  border-radius: 20px;\n}\n.error-banner[_ngcontent-%COMP%] {\n  position: absolute;\n  background-color: var(--error-color);\n  color: white;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  padding: 16px;\n  border-radius: 20px;\n}\n/*# sourceMappingURL=board-container.component.css.map */'], changeDetection: 0 });
 var BoardContainerComponent = _BoardContainerComponent;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(BoardContainerComponent, { className: "BoardContainerComponent", filePath: "src/app/board-container/board-container.component.ts", lineNumber: 30 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(BoardContainerComponent, { className: "BoardContainerComponent", filePath: "src/app/board-container/board-container.component.ts", lineNumber: 31 });
 })();
 
 // src/app/menu/menu.component.ts
@@ -23393,7 +23414,7 @@ _MenuComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _
     \u0275\u0275advance(2);
     \u0275\u0275property("disabled", ctx.menuForm.invalid);
   }
-}, dependencies: [ReactiveFormsModule, \u0275NgNoValidate, NgSelectOption, \u0275NgSelectMultipleOption, SelectControlValueAccessor, NgControlStatus, NgControlStatusGroup, FormGroupDirective, FormControlName, CommonModule, TitleCasePipe], styles: ['\n\n.menu-panel[_ngcontent-%COMP%] {\n  display: grid;\n  align-content: flex-start;\n  background-color: var(--surface-color);\n  border: 6px solid var(--secondary-color);\n  padding: var(--gap-large);\n  border-radius: 16px;\n  gap: var(--gap-large);\n}\n.title[_ngcontent-%COMP%] {\n  font: 700 48px "Fredoka One";\n  color: var(--primary-color);\n  margin-top: var(--gap-large);\n}\n.form-container[_ngcontent-%COMP%] {\n  display: grid;\n  align-content: flex-start;\n  gap: var(--gap-medium);\n}\n.information-label[_ngcontent-%COMP%] {\n  font: 700 24px "Fredoka One";\n  color: var(--primary-color);\n}\n.submit-btn[_ngcontent-%COMP%] {\n  margin-top: var(--gap-large);\n}\n/*# sourceMappingURL=menu.component.css.map */'], changeDetection: 0 });
+}, dependencies: [ReactiveFormsModule, \u0275NgNoValidate, NgSelectOption, \u0275NgSelectMultipleOption, SelectControlValueAccessor, NgControlStatus, NgControlStatusGroup, FormGroupDirective, FormControlName, CommonModule, TitleCasePipe], styles: ['\n\n.menu-panel[_ngcontent-%COMP%] {\n  display: grid;\n  align-content: flex-start;\n  background-color: var(--surface-color);\n  border: 6px solid var(--secondary-color);\n  padding: var(--spacing-large);\n  border-radius: 16px;\n  gap: var(--spacing-large);\n}\n.title[_ngcontent-%COMP%] {\n  font: 700 48px "Fredoka One";\n  color: var(--primary-color);\n  margin-top: var(--spacing-large);\n}\n.form-container[_ngcontent-%COMP%] {\n  display: grid;\n  align-content: flex-start;\n  gap: var(--spacing-medium);\n}\n.information-label[_ngcontent-%COMP%] {\n  font: 700 24px "Fredoka One";\n  color: var(--primary-color);\n}\n.submit-btn[_ngcontent-%COMP%] {\n  margin-top: var(--spacing-large);\n}\n/*# sourceMappingURL=menu.component.css.map */'], changeDetection: 0 });
 var MenuComponent = _MenuComponent;
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(MenuComponent, { className: "MenuComponent", filePath: "src/app/menu/menu.component.ts", lineNumber: 19 });
@@ -23463,7 +23484,8 @@ var _SudokuEffect = class _SudokuEffect {
           inGameBoardOne: boardResponse.board,
           inGameBoardTwo: [],
           isSolved: false,
-          isValid: true
+          isValid: true,
+          isGameInProgress: true
         };
         return sudokuActions.submitGameDetailsSuccess({ startState });
       }))));
@@ -23541,7 +23563,8 @@ var initialState = {
   inGameBoardOne: [],
   inGameBoardTwo: [],
   isSolved: false,
-  isValid: true
+  isValid: true,
+  isGameInProgress: true
 };
 var AppReducer = createReducer(initialState, on(sudokuActions.submitGameDetailsSuccess, (_state, { startState }) => startState), on(sudokuActions.generateExtraBoard, (state, { board }) => {
   return __spreadProps(__spreadValues({}, state), {
@@ -23560,13 +23583,15 @@ var AppReducer = createReducer(initialState, on(sudokuActions.submitGameDetailsS
   return __spreadProps(__spreadValues({}, state), {
     initialBoardOne: board,
     inGameBoardOne: board,
-    isSolved: true
+    isSolved: true,
+    isGameInProgress: false
   });
 }), on(sudokuActions.solveBoardTwoSuccess, (state, { board }) => {
   return __spreadProps(__spreadValues({}, state), {
     initialBoardTwo: board,
     inGameBoardTwo: board,
-    isSolved: true
+    isSolved: true,
+    isGameInProgress: false
   });
 }), on(sudokuActions.solveBoardOneFailure, (state) => {
   return __spreadProps(__spreadValues({}, state), {
@@ -23578,11 +23603,13 @@ var AppReducer = createReducer(initialState, on(sudokuActions.submitGameDetailsS
   });
 }), on(sudokuActions.validateBoardOneSuccess, (state) => {
   return __spreadProps(__spreadValues({}, state), {
-    isSolved: true
+    isSolved: true,
+    isGameInProgress: false
   });
 }), on(sudokuActions.validateBoardTwoSuccess, (state) => {
   return __spreadProps(__spreadValues({}, state), {
-    isSolved: true
+    isSolved: true,
+    isGameInProgress: false
   });
 }), on(sudokuActions.validateBoardOneFailure, (state) => {
   return __spreadProps(__spreadValues({}, state), {
