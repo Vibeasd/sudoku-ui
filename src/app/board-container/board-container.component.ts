@@ -3,7 +3,7 @@ import { CommonModule, NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { BoardComponent } from '../board/board.component';
 import { AppState, Board, Difficulty } from '../model/sudoku.types';
 import { sudokuActions } from '../sudoku-sdk/sudoku.action';
@@ -11,7 +11,7 @@ import {
 	selectBoardOneInitial,
 	selectBoardTwoInitial,
 	selectDifficulty,
-	selectGameMode,
+	selectIsSingleMode,
 	selectIsSolved,
 	selectIsValid,
 } from '../sudoku-sdk/sudoku.selector';
@@ -36,9 +36,7 @@ export class BoardContainerComponent {
 	/**
 	 * It contains the game mode setting.
 	 */
-	readonly isSingle$: Observable<boolean> = this.store
-		.select(selectGameMode)
-		.pipe(map((gameMode) => gameMode === 'single'));
+	readonly isSingle$: Observable<boolean> = this.store.select(selectIsSingleMode);
 
 	/**
 	 * It holds every information about the player one's game board.
