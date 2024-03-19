@@ -4,7 +4,7 @@ import { AppState } from '../model/sudoku.types';
 const selectSudokuAppState = createFeatureSelector<AppState>('sudoku');
 
 export const selectSudokuState = createSelector(selectSudokuAppState, (state) => state);
-export const selectGameMode = createSelector(selectSudokuAppState, (state) => state.gameMode);
+export const selectIsSingleMode = createSelector(selectSudokuAppState, (state) => state.gameMode === 'single');
 export const selectDifficulty = createSelector(selectSudokuAppState, (state) => state.difficulty);
 
 export const selectBoardOneInGame = createSelector(selectSudokuAppState, (state) => state.inGameBoardOne);

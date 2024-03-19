@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { filter, map, switchMap, tap, withLatestFrom } from 'rxjs';
+import { filter, map, switchMap, tap } from 'rxjs';
 import { AppState } from '../model/sudoku.types';
 import { sudokuActions } from './sudoku.action';
 import { selectBoardOneInGame, selectBoardTwoInGame } from './sudoku.selector';
@@ -65,7 +65,7 @@ export class SudokuEffect {
 	solveBoardOne$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(sudokuActions.solveBoardOne),
-			withLatestFrom(this.store.select(selectBoardOneInGame)),
+			concatLatestFrom(() => this.store.select(selectBoardOneInGame)),
 			switchMap(([, inGameBoard]) => {
 				return this.sudokuService.solveSudokuBoard(inGameBoard).pipe(
 					map((response) => {
@@ -83,7 +83,7 @@ export class SudokuEffect {
 	solveBoardTwo$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(sudokuActions.solveBoardTwo),
-			withLatestFrom(this.store.select(selectBoardTwoInGame)),
+			concatLatestFrom(() => this.store.select(selectBoardTwoInGame)),
 			switchMap(([, inGameBoard]) => {
 				return this.sudokuService.solveSudokuBoard(inGameBoard).pipe(
 					map((response) => {
@@ -101,7 +101,7 @@ export class SudokuEffect {
 	validateBoardOne$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(sudokuActions.validateBoardOne),
-			withLatestFrom(this.store.select(selectBoardOneInGame)),
+			concatLatestFrom(() => this.store.select(selectBoardOneInGame)),
 			switchMap(([, inGameBoard]) => {
 				return this.sudokuService.validateSudokuBoard(inGameBoard).pipe(
 					map((response) => {
@@ -119,7 +119,7 @@ export class SudokuEffect {
 	validateBoardTwo$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(sudokuActions.validateBoardTwo),
-			withLatestFrom(this.store.select(selectBoardTwoInGame)),
+			concatLatestFrom(() => this.store.select(selectBoardTwoInGame)),
 			switchMap(([, inGameBoard]) => {
 				return this.sudokuService.validateSudokuBoard(inGameBoard).pipe(
 					map((response) => {
