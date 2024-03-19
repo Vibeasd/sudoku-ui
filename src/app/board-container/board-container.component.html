@@ -5,7 +5,11 @@
 			<button data-testid="validate-player-one" (click)="validateBoardOne()" class="header2">Validate</button>
 			<button data-testid="solve-player-one" (click)="solveBoardOne()" class="header3">Solve</button>
 		}
-		<button class="header4" (click)="restartGame()">Restart</button>
+		@if (isGameInProgress$ | async) {
+			<button class="header4" (click)="restartGame()">Restart</button>
+		} @else {
+			<a class="header4" routerLink="">Back To Menu</a>
+		}
 		<div class="game-area">
 			@if (isSingle$ | async) {
 				<app-board [isMultiMode]="false" [isPlayerOne]="true" [boardConfig$]="boardOne$"></app-board>

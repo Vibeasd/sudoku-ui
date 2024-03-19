@@ -11,6 +11,7 @@ import {
 	selectBoardOneInitial,
 	selectBoardTwoInitial,
 	selectDifficulty,
+	selectIsGameInProgress,
 	selectIsSingleMode,
 	selectIsSolved,
 	selectIsValid,
@@ -57,6 +58,11 @@ export class BoardContainerComponent {
 	 * If a sudoku board was solved this prop holds about that information.
 	 */
 	readonly isSolved$: Observable<boolean> = this.store.select(selectIsSolved);
+
+	/**
+	 * It stores information about if the sudoku has been solved.
+	 */
+	readonly isGameInProgress$: Observable<boolean> = this.store.select(selectIsGameInProgress);
 
 	constructor(private store: Store<AppState>) {}
 

@@ -1,5 +1,5 @@
 import { CommonModule, NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
@@ -41,23 +41,8 @@ export class BoardComponent implements OnDestroy, OnInit {
 	 */
 	flattenedBoard = signal<number[]>([]);
 	private subscriptions$$: Subscription = new Subscription();
+	private store: Store = inject(Store);
 
-	constructor(private store: Store) {
-		const formValueChanges$ = this.boardForm.valueChanges
-			.pipe(debounceTime(200), distinctUntilChanged())
-			.subscribe((formState) => {
-				const inputValues: Board = this.arrayToBoard(
-					Object.values(formState).map((value) => (value === '' ? 0 : value)) as number[],
-				);
-				if (this.isPlayerOne) {
-					this.store.dispatch(sudokuActions.updateBoardOne({ board: inputValues }));
-				} else {
-					this.store.dispatch(sudokuActions.updateBoardTwo({ board: inputValues }));
-				}
-			});
-
-		this.subscriptions$$.add(formValueChanges$);
-	}
 	ngOnInit(): void {
 		const initBoard$ = this.boardConfig$.subscribe((board) => {
 			this.flattenedBoard.set(board ? this.flattenBoard(board) : []);
@@ -72,6 +57,21 @@ export class BoardComponent implements OnDestroy, OnInit {
 		});
 
 		this.subscriptions$$.add(initBoard$);
+
+		const formValueChanges$ = this.boardForm.valueChanges
+			.pipe(debounceTime(200), distinctUntilChanged())
+			.subscribe((formState) => {
+				const inputValues: Board = this.arrayToBoard(
+					Object.values(formState).map((value) => (value === '' ? 0 : value)) as number[],
+				);
+				if (this.isPlayerOne) {
+					this.store.dispatch(sudokuActions.updateBoardOne({ board: inputValues }));
+				} else {
+					this.store.dispatch(sudokuActions.updateBoardTwo({ board: inputValues }));
+				}
+			});
+
+		this.subscriptions$$.add(formValueChanges$);
 	}
 	ngOnDestroy(): void {
 		this.subscriptions$$.unsubscribe();

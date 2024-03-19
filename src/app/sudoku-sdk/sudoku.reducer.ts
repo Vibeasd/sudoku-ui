@@ -11,6 +11,7 @@ const initialState: AppState = {
 	inGameBoardTwo: [],
 	isSolved: false,
 	isValid: true,
+	isGameInProgress: true,
 };
 
 export const AppReducer = createReducer(
@@ -41,6 +42,7 @@ export const AppReducer = createReducer(
 			initialBoardOne: board,
 			inGameBoardOne: board,
 			isSolved: true,
+			isGameInProgress: false,
 		};
 	}),
 	on(sudokuActions.solveBoardTwoSuccess, (state, { board }): AppState => {
@@ -49,6 +51,7 @@ export const AppReducer = createReducer(
 			initialBoardTwo: board,
 			inGameBoardTwo: board,
 			isSolved: true,
+			isGameInProgress: false,
 		};
 	}),
 	on(sudokuActions.solveBoardOneFailure, (state): AppState => {
@@ -67,12 +70,14 @@ export const AppReducer = createReducer(
 		return {
 			...state,
 			isSolved: true,
+			isGameInProgress: false,
 		};
 	}),
 	on(sudokuActions.validateBoardTwoSuccess, (state): AppState => {
 		return {
 			...state,
 			isSolved: true,
+			isGameInProgress: false,
 		};
 	}),
 	on(sudokuActions.validateBoardOneFailure, (state): AppState => {

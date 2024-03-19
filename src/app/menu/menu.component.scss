@@ -3,21 +3,21 @@
 	align-content: flex-start;
 	background-color: var(--surface-color);
 	border: 6px solid var(--secondary-color);
-	padding: var(--gap-large);
+	padding: var(--spacing-large);
 	border-radius: 16px;
-	gap: var(--gap-large);
+	gap: var(--spacing-large);
 }
 
 .title {
 	font: 700 48px "Fredoka One";
 	color: var(--primary-color);
-	margin-top: var(--gap-large);
+	margin-top: var(--spacing-large);
 }
 
 .form-container {
 	display: grid;
 	align-content: flex-start;
-	gap: var(--gap-medium);
+	gap: var(--spacing-medium);
 }
 
 .information-label {
@@ -26,5 +26,5 @@
 }
 
 .submit-btn {
-	margin-top: var(--gap-large);
+	margin-top: var(--spacing-large);
 }

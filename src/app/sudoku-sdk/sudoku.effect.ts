@@ -25,6 +25,7 @@ export class SudokuEffect {
 							inGameBoardTwo: [],
 							isSolved: false,
 							isValid: true,
+							isGameInProgress: true,
 						};
 						return sudokuActions.submitGameDetailsSuccess({ startState });
 					}),
