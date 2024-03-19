@@ -7,9 +7,9 @@
 		"footer footer footer footer";
 	background-color: var(--surface-color);
 	border: 6px solid var(--secondary-color);
-	padding: var(--gap-medium);
+	padding: var(--spacing-medium);
 	border-radius: 16px;
-	gap: var(--gap-large);
+	gap: var(--spacing-large);
 	width: 90%;
 }
 
@@ -22,9 +22,9 @@
 		"footer footer";
 	background-color: var(--surface-color);
 	border: 6px solid var(--secondary-color);
-	padding: var(--gap-medium);
+	padding: var(--spacing-medium);
 	border-radius: 16px;
-	gap: var(--gap-large);
+	gap: var(--spacing-large);
 	width: 100%;
 }
 
@@ -74,7 +74,7 @@ h3 {
 		"menu1 menu2"
 		"main main";
 	align-content: flex-start;
-	gap: var(--gap-large);
+	gap: var(--spacing-large);
 
 	.menu-item-validation {
 		grid-area: menu1;
