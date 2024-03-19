@@ -7,6 +7,9 @@ import { Board } from '../model/sudoku.types';
 import { sudokuActions } from '../sudoku-sdk/sudoku.action';
 import { InputValidatorDirective } from '../utils/input-validator.directive';
 
+/**
+ * Generic sudoku board component for any user.
+ */
 @Component({
 	selector: 'app-board',
 	standalone: true,
@@ -16,6 +19,9 @@ import { InputValidatorDirective } from '../utils/input-validator.directive';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardComponent implements OnDestroy, OnInit {
+	/**
+	 * It contains all information about the sudoku board.
+	 */
 	@Input()
 	boardConfig$!: Observable<Board>;
 
@@ -25,9 +31,16 @@ export class BoardComponent implements OnDestroy, OnInit {
 	@Input()
 	isMultiMode!: boolean;
 
+	/**
+	 * This form handles the interaction between the user and the board.
+	 */
 	boardForm: FormGroup = new FormGroup({});
+
+	/**
+	 * This board is presented to the user.
+	 */
 	flattenedBoard = signal<number[]>([]);
-	subscriptions$$: Subscription = new Subscription();
+	private subscriptions$$: Subscription = new Subscription();
 
 	constructor(private store: Store) {
 		const formValueChanges$ = this.boardForm.valueChanges
