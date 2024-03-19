@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/utils/input-validator.directive.ts"],
+  "sourcesContent": ["import { Directive, HostListener } from '@angular/core';\n\n@Directive({\n\tselector: '[appInputValidator]',\n\tstandalone: true,\n})\nexport class InputValidatorDirective {\n\tconstructor() {}\n\n\t// eslint-disable-next-line @typescript-eslint/no-explicit-any\n\t@HostListener('input', ['$event']) onInput(event: any) {\n\t\tconst input = event.target;\n\t\tconst inputValue = input.value;\n\t\tif (inputValue == 0) {\n\t\t\tinput.value = '';\n\t\t\tevent.preventDefault();\n\t\t}\n\t\tif (inputValue.length > 1) {\n\t\t\tinput.value = inputValue.slice(0, 1);\n\t\t\tevent.preventDefault();\n\t\t}\n\t}\n}\n"],
+  "mappings": ";;;;;;AAMM,IAAO,2BAAP,MAAO,yBAAuB;EACnC,cAAA;EAAe;;EAGoB,QAAQ,OAAU;AACpD,UAAM,QAAQ,MAAM;AACpB,UAAM,aAAa,MAAM;AACzB,QAAI,cAAc,GAAG;AACpB,YAAM,QAAQ;AACd,YAAM,eAAc;IACrB;AACA,QAAI,WAAW,SAAS,GAAG;AAC1B,YAAM,QAAQ,WAAW,MAAM,GAAG,CAAC;AACnC,YAAM,eAAc;IACrB;EACD;;;mBAfY,0BAAuB;AAAA;yFAAvB,0BAAuB,WAAA,CAAA,CAAA,IAAA,qBAAA,EAAA,CAAA,GAAA,cAAA,SAAA,qCAAA,IAAA,KAAA;AAAA,MAAA,KAAA,GAAA;AAAvB,IAAA,qBAAA,SAAA,SAAA,iDAAA,QAAA;AAAA,aAAA,IAAA,QAAA,MAAA;IAAe,CAAA;;;AAAtB,IAAO,0BAAP;",
+  "names": []
+}

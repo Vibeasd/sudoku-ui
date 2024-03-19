@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/board/board.component.scss"],
+  "sourcesContent": ["form {\n\tdisplay: grid;\n\tgrid-template-columns: auto auto auto auto auto auto auto auto auto;\n\tborder: 2px solid var(--primary-color);\n}\n\n.single-input {\n\twidth: 64px;\n\theight: 64px;\n\ttext-align: center;\n\tfont-size: 32px;\n}\n\n.multi-input {\n\twidth: 44px;\n\theight: 44px;\n\ttext-align: center;\n\tfont-size: 24px;\n}\n\n@media only screen and (max-width: 768px) {\n\t.single-input {\n\t\twidth: 32px;\n\t\theight: 32px;\n\t\ttext-align: center;\n\t\tfont-size: 16px;\n\t}\n}\n"],
+  "mappings": ";AAAA;AACC,WAAA;AACA,yBAAA,KAAA,KAAA,KAAA,KAAA,KAAA,KAAA,KAAA,KAAA;AACA,UAAA,IAAA,MAAA,IAAA;;AAGD,CAAA;AACC,SAAA;AACA,UAAA;AACA,cAAA;AACA,aAAA;;AAGD,CAAA;AACC,SAAA;AACA,UAAA;AACA,cAAA;AACA,aAAA;;AAGD,OAAA,KAAA,OAAA,IAAA,CAAA,SAAA,EAAA;AACC,GAfD;AAgBE,WAAA;AACA,YAAA;AACA,gBAAA;AACA,eAAA;;;",
+  "names": []
+}

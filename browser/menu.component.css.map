@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/menu/menu.component.scss"],
+  "sourcesContent": [".menu-panel {\n\tdisplay: grid;\n\talign-content: flex-start;\n\tbackground-color: var(--surface-color);\n\tborder: 6px solid var(--secondary-color);\n\tpadding: var(--gap-large);\n\tborder-radius: 16px;\n\tgap: var(--gap-large);\n}\n\n.title {\n\tfont: 700 48px \"Fredoka One\";\n\tcolor: var(--primary-color);\n\tmargin-top: var(--gap-large);\n}\n\n.form-container {\n\tdisplay: grid;\n\talign-content: flex-start;\n\tgap: var(--gap-medium);\n}\n\n.information-label {\n\tfont: 700 24px \"Fredoka One\";\n\tcolor: var(--primary-color);\n}\n\n.submit-btn {\n\tmargin-top: var(--gap-large);\n}\n"],
+  "mappings": ";AAAA,CAAA;AACC,WAAA;AACA,iBAAA;AACA,oBAAA,IAAA;AACA,UAAA,IAAA,MAAA,IAAA;AACA,WAAA,IAAA;AACA,iBAAA;AACA,OAAA,IAAA;;AAGD,CAAA;AACC,QAAA,IAAA,KAAA;AACA,SAAA,IAAA;AACA,cAAA,IAAA;;AAGD,CAAA;AACC,WAAA;AACA,iBAAA;AACA,OAAA,IAAA;;AAGD,CAAA;AACC,QAAA,IAAA,KAAA;AACA,SAAA,IAAA;;AAGD,CAAA;AACC,cAAA,IAAA;;",
+  "names": []
+}
