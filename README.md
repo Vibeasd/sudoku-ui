@@ -1,27 +1,51 @@
 # SudokuUi
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.0.
+This is the documentation of the sudoku client site application.
 
-## Development server
+## To start
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Just clone the the repository and install the dependencies by:
 
-## Code scaffolding
+```bash
+npm i
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+And start the development server with:
 
-## Build
+```bash
+npm start
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+OR
 
-## Running unit tests
+Just play with the deployed version: https://github.com/Vibeasd/sudoku-ui
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Requirements
 
-## Running end-to-end tests
+-   Choose a difficulty for the board (easy/medium/hard/random) and then start the game.
+-   Enter numbers in the empty squares (not allowed to change the prefilled squares)
+-   Have a “Validate” button to verify if they have solved it.
+-   Have a “Solve” button that auto-solves the puzzle.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## How it works?
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```mermaid
+sequenceDiagram
+    actor User
+    participant Menu
+    participant Game Board
+    participant Store
+    participant Backend API
+    User->>Menu: Selects game settings
+    Menu->>Store: Save state
+    Store->>Backend API: Fetch board
+    Menu->>Game Board: Redirect
+    User->>Game Board: Playing the game
+    Game Board->>Store: Updates the state
+    User->>Game Board: Validates the board
+    Store->>Backend API: Validate
+    Game Board->>User: Notifies the user about the state
+    User->>Game Board: Solves the board
+    Store->>Backend API: Solve
+    Game Board->>User: Notifies the user about the state
+```
